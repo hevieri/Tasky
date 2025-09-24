@@ -1,0 +1,10 @@
+.status-summary {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0;
+  font-size: 14px;
+}
+
+.status-summary .done { color: #2ecc71; font-weight: bold; }
+.status-summary .active { color: #3498db; font-weight: bold; }
+.status-summary .planned { color: #e67e22; font-weight: bold; }

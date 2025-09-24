@@ -1,0 +1,29 @@
+.editable-table {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: #111;
+  border-radius: 8px;
+  color: #eee;
+}
+
+.editable-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.editable-table th,
+.editable-table td {
+  padding: 8px;
+  border-bottom: 1px solid #333;
+}
+
+.editable-table input,
+.editable-table select {
+  width: 100%;
+  padding: 4px;
+  background: #222;
+  color: #eee;
+  border: 1px solid #444;
+  border-radius: 4px;
+}

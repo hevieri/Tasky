@@ -1,0 +1,56 @@
+.roadmap-minimal {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: #111;
+  border-radius: 8px;
+  color: #eee;
+}
+
+.legend {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.legend-box {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-right: 5px;
+  border-radius: 3px;
+}
+
+.legend-box.done { background: #2ecc71; }
+.legend-box.active { background: #3498db; }
+.legend-box.planned { background: #e67e22; }
+
+.task-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.task-table th, .task-table td {
+  padding: 8px;
+  border-bottom: 1px solid #333;
+  text-align: left;
+}
+
+.status.done { color: #2ecc71; font-weight: bold; }
+.status.active { color: #3498db; font-weight: bold; }
+.status.planned { color: #e67e22; font-weight: bold; }
+
+.bar-container {
+  position: relative;
+  height: 20px;
+  background: #222;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.bar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: 4px;
+}
