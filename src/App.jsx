@@ -1,24 +1,86 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import FileUploader from './components/FileUploader';
 import RoadmapMinimal from './components/RoadmapMinimal';
 import RoadmapKanban from './components/RoadmapKanban';
 import StatusSummary from './components/StatusSummary';
-import CategoryFilter from './components/CategoryFilter';
+// import CategoryFilter from './components/CategoryFilter'; // lo quitamos
 import StatusPieChart from './components/StatusPieChart';
 import EditableTable from './components/EditableTable';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 import './App.css';
 
 function App() {
+  const [file, setFile] = useState(null);
   const [tasks, setTasks] = useState([]);
   const [editedTasks, setEditedTasks] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [editMode, setEditMode] = useState(false);
   const [validationError, setValidationError] = useState('');
+  const [step, setStep] = useState(1); // 1 = subir archivo, 2 = visualizar
 
-  const handleDataParsed = (parsedTasks) => {
-    console.log('Tareas recibidas:', parsedTasks);
-    setTasks(parsedTasks);
-    setEditedTasks(parsedTasks);
+  const exportRef = useRef(null);
+
+  const handleUpload = () => {
+    if (!file) {
+      alert('Seleccioná un archivo primero');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const json = JSON.parse(event.target.result);
+        if (!Array.isArray(json)) {
+          alert('El archivo debe contener un array de tareas');
+          return;
+        }
+        console.log('Tareas recibidas:', json);
+        setTasks(json);
+        setEditedTasks(json);
+        setStep(2); // pasamos a la vista de gráficos
+      } catch (error) {
+        alert('Error al parsear JSON: ' + error.message);
+      }
+    };
+    reader.readAsText(file);
+  };
+
+  const handleExportJSON = () => {
+    const dataStr = JSON.stringify(tasks, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'tareas_editadas.json';
+    link.click();
+
+    URL.revokeObjectURL(url);
+  };
+
+  const handleExportPNG = async () => {
+    if (!exportRef.current) return;
+    const canvas = await html2canvas(exportRef.current, { backgroundColor: "#121212" });
+    const dataUrl = canvas.toDataURL("image/png");
+
+    const link = document.createElement("a");
+    link.href = dataUrl;
+    link.download = "tasky_graficos.png";
+    link.click();
+  };
+
+  const handleExportPDF = async () => {
+    if (!exportRef.current) return;
+    const canvas = await html2canvas(exportRef.current, { backgroundColor: "#121212" });
+    const imgData = canvas.toDataURL("image/png");
+
+    const pdf = new jsPDF("p", "mm", "a4");
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+    pdf.save("tasky_graficos.pdf");
   };
 
   const filteredTasks = selectedCategory
@@ -48,56 +110,93 @@ function App() {
       return;
     }
     setValidationError('');
-    setTasks(editedTasks);
+    setTasks([...editedTasks]);
+    setEditMode(false);
+  };
+
+  const resetApp = () => {
+    setFile(null);
+    setTasks([]);
+    setEditedTasks([]);
+    setSelectedCategory('');
+    setEditMode(false);
+    setValidationError('');
+    setStep(1);
   };
 
   return (
     <div className="app-container">
-      <h1>🛠️ Tasky: Generador de Roadmaps Visuales</h1>
+      <div className="card-container">
+        <h1 onClick={resetApp} style={{ cursor: 'pointer' }}>
+          🛠️ Tasky
+        </h1>
+        <p className="subtitle">Generador de Roadmaps Visuales</p>
 
-      <FileUploader onDataParsed={handleDataParsed} />
+        {step === 1 && (
+          <>
+            <FileUploader onFileSelected={setFile} />
+            <p className="file-info">
+              {file ? file.name : 'Ningún archivo seleccionado'}
+            </p>
+            <button className="primary-btn" onClick={handleUpload}>
+              Subir y visualizar
+            </button>
+          </>
+        )}
 
-      {tasks.length > 0 && (
-        <>
-          {/* Toggle edición */}
-          <label style={{ marginTop: '1rem', display: 'block' }}>
-            <input
-              type="checkbox"
-              checked={editMode}
-              onChange={(e) => setEditMode(e.target.checked)}
-            />
-            ✏️ Modo edición
-          </label>
+        {step === 2 && tasks.length > 0 && (
+          <>
+            <div className="toolbar">
+              <label className="edit-toggle">
+                <input
+                  type="checkbox"
+                  checked={editMode}
+                  onChange={(e) => setEditMode(e.target.checked)}
+                />
+                ✏️ Modo edición
+              </label>
+            </div>
 
-          {editMode ? (
-            <>
-              <EditableTable tasks={filteredEditedTasks} onUpdate={setEditedTasks} />
-              {validationError && (
-                <div style={{ color: '#e74c3c', marginBottom: '1rem' }}>
-                  ⚠️ {validationError}
+            {editMode ? (
+              <>
+                <EditableTable
+                  tasks={filteredEditedTasks}
+                  onUpdate={setEditedTasks}
+                />
+                {validationError && (
+                  <div className="error-msg">⚠️ {validationError}</div>
+                )}
+                <button className="primary-btn" onClick={applyEdits}>
+                  ✅ Aplicar cambios
+                </button>
+              </>
+            ) : (
+              <>
+                {/* 🔑 Todo lo visual que queremos exportar */}
+                <div ref={exportRef}>
+                  <StatusSummary tasks={filteredTasks} />
+                  <RoadmapKanban tasks={filteredTasks} />
+                  <RoadmapMinimal tasks={filteredTasks} />
+                  <div className="pie-wrapper">
+                    <StatusPieChart tasks={filteredTasks} />
+                  </div>
                 </div>
-              )}
-              <button onClick={applyEdits}>✅ Aplicar cambios</button>
-            </>
-          ) : (
-            <>
-              <StatusSummary tasks={filteredTasks} />
-              <CategoryFilter
-                tasks={tasks}
-                selected={selectedCategory}
-                onChange={setSelectedCategory}
-              />
 
-              {/* Vistas en orden personalizado */}
-              <RoadmapKanban tasks={filteredTasks} />
-              <RoadmapMinimal tasks={filteredTasks} />
-              <div className="pie-wrapper">
-                <StatusPieChart tasks={filteredTasks} />
-              </div>
-            </>
-          )}
-        </>
-      )}
+                {/* Botones de exportación */}
+                <button className="primary-btn" onClick={handleExportJSON}>
+                  💾 Exportar JSON
+                </button>
+                <button className="primary-btn" onClick={handleExportPNG}>
+                  🖼️ Exportar PNG
+                </button>
+                <button className="primary-btn" onClick={handleExportPDF}>
+                  📄 Exportar PDF
+                </button>
+              </>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 }

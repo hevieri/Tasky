@@ -17,9 +17,9 @@ function StatusPieChart({ tasks }) {
   const COLORS = ['#2ecc71', '#3498db', '#e67e22'];
 
   return (
-    <div style={{ width: '100%', height: 250 }}>
-      <h3>📊 Distribución de tareas</h3>
-      <ResponsiveContainer>
+    <div className="pie-wrapper">
+      <h3 className="pie-title">📊 Distribución de tareas</h3>
+      <ResponsiveContainer width="100%" height={250}>
         <PieChart>
           <Pie
             data={data}
@@ -33,7 +33,7 @@ function StatusPieChart({ tasks }) {
             ))}
           </Pie>
           <Tooltip />
-          <Legend />
+          <Legend verticalAlign="bottom" height={36} />
         </PieChart>
       </ResponsiveContainer>
     </div>
