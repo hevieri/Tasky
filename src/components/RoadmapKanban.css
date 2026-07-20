@@ -1,9 +1,10 @@
 .kanban-container {
   margin-top: 2rem;
-  padding: 1rem;
-  background: #111;
-  border-radius: 8px;
-  color: #eee;
+  padding: 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
 }
 
 .kanban-board {
@@ -14,25 +15,32 @@
 
 .kanban-column {
   flex: 1;
-  background: #1c1c1c;
-  border-radius: 6px;
-  padding: 0.5rem;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem;
 }
 
 .kanban-title {
   text-align: center;
-  margin-bottom: 0.5rem;
-  font-size: 14px;
-  font-weight: bold;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+  font-weight: 700;
 }
 
 .kanban-card {
-  background: #222;
-  border-radius: 4px;
-  padding: 0.5rem;
-  margin-bottom: 0.5rem;
-  font-size: 13px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.4);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.6rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.85rem;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.kanban-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
 }
 
 .kanban-card strong {
@@ -41,11 +49,11 @@
 }
 
 .kanban-card .dates {
-  font-size: 11px;
-  color: #aaa;
+  font-size: 0.75rem;
+  color: var(--text-soft);
 }
 
 /* Colores por estado */
-.kanban-column.done .kanban-title { color: #2ecc71; }
-.kanban-column.active .kanban-title { color: #3498db; }
-.kanban-column.planned .kanban-title { color: #e67e22; }
+.kanban-column.done .kanban-title { color: var(--done); }
+.kanban-column.active .kanban-title { color: var(--active); }
+.kanban-column.planned .kanban-title { color: var(--planned); }

@@ -1,136 +1,282 @@
-/* Layout base */
+/* ===== Layout base ===== */
 #root {
-  max-width: 1280px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-  font-family: "Segoe UI", sans-serif;
+  padding: 2rem 1.25rem 4rem;
 }
 
 .app-container {
-  max-width: 1280px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-  background: #121212;
-  color: #f5f5f5;
+  color: var(--text);
 }
 
-/* Título */
-h1 {
-  margin: 0 0 1rem 0;
-  font-size: 2rem;
+/* ===== Header ===== */
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.app-logo {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  font-size: 1.4rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+}
+
+.app-title {
+  margin: 0;
+  font-size: 1.9rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  cursor: pointer;
+  background: linear-gradient(135deg, #fff, var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .subtitle {
-  margin: 0 0 1rem 0;
-  font-size: 1.1rem;
-  color: #aaa;
+  margin: 0 0 2rem 0;
+  font-size: 1.05rem;
+  color: var(--text-soft);
 }
 
-/* Toolbar */
+/* ===== Landing / Hero (step 1) ===== */
+.hero {
+  display: grid;
+  gap: 2rem;
+}
+
+.hero-card {
+  background: linear-gradient(160deg, var(--surface), var(--surface-2));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2.25rem;
+  box-shadow: var(--shadow);
+}
+
+.hero-card h2 {
+  margin: 0 0 0.6rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.hero-card p.lead {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 1.05rem;
+  max-width: 60ch;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1.75rem;
+}
+
+.feature {
+  display: flex;
+  gap: 0.85rem;
+  align-items: flex-start;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1.1rem;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.feature:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+}
+
+.feature-icon {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.feature h3 {
+  margin: 0 0 0.25rem;
+  font-size: 0.98rem;
+  font-weight: 600;
+}
+
+.feature p {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--text-soft);
+}
+
+/* ===== Upload zone ===== */
+.upload-zone {
+  margin-top: 2rem;
+  background: var(--surface);
+  border: 1.5px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  text-align: center;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.upload-zone:hover {
+  border-color: var(--accent);
+}
+
+.upload-zone .file-info {
+  margin: 1rem 0 0;
+  font-size: 0.9rem;
+  color: var(--text-soft);
+  font-style: italic;
+}
+
+/* ===== Toolbar ===== */
 .toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
   margin: 1.5rem 0;
+  flex-wrap: wrap;
 }
 
 .edit-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   font-size: 0.95rem;
-}
-
-/* Botón principal */
-.primary-btn {
-  display: block;
-  margin: 2rem auto 0 auto;
-  padding: 1rem 2rem;
-  border: none;
-  border-radius: 10px;
-  font-size: 1rem;
-  font-weight: bold;
+  color: var(--text-soft);
   cursor: pointer;
-  color: white;
-  background: linear-gradient(135deg, #ff416c, #ff4b2b, #8e2de2, #4a00e0);
-  background-size: 300% 300%;
-  transition: transform 0.2s, background-position 0.5s;
+  user-select: none;
 }
+
+.edit-toggle input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+}
+
+/* ===== Botones ===== */
+.primary-btn {
+  display: inline-block;
+  margin: 1rem 0.5rem 0 0;
+  padding: 0.85rem 1.6rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.98rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
 .primary-btn:hover {
-  transform: scale(1.05);
-  background-position: right center;
+  transform: translateY(-2px);
+  filter: brightness(1.08);
 }
 
-/* Mensajes de error */
+.primary-btn:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  display: inline-block;
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 0.85rem 1.6rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background: #232a3a;
+  border-color: var(--accent);
+}
+
+/* ===== Mensajes de error ===== */
 .error-msg {
-  color: #e74c3c;
+  color: #fca5a5;
+  background: rgba(248, 113, 113, 0.12);
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
   margin: 1rem 0;
-  font-weight: bold;
+  font-weight: 600;
+  font-size: 0.92rem;
 }
 
-/* Pie chart */
+/* ===== Pie chart ===== */
 .pie-wrapper {
   display: flex;
-  flex-direction: column;   /* título, gráfico y leyenda apilados */
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   margin: 2rem auto;
   padding: 1.5rem;
-  background-color: #111;
-  border-radius: 16px;
-  max-width: 500px;
-  aspect-ratio: 1/1;        /* 🔑 mantiene el recuadro cuadrado */
-  box-sizing: border-box;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  max-width: 460px;
+  aspect-ratio: 1 / 1;
+  box-shadow: var(--shadow-sm);
 }
 
 .pie-title {
   margin: 0 0 1rem 0;
   font-size: 1.2rem;
   font-weight: 600;
-  color: #f5f5f5;
+  color: var(--text);
 }
 
 .pie-wrapper canvas {
   width: 100% !important;
-  height: 100% !important;  /* 🔑 ocupa todo el cuadrado */
+  height: 100% !important;
 }
 
-/* Ajuste de la leyenda de Recharts */
 .pie-wrapper .recharts-legend-wrapper {
   margin-top: 1rem;
-  color: #f5f5f5;
+  color: var(--text);
   font-size: 0.9rem;
   text-align: center;
 }
 
-
-/* Chart box */
+/* ===== Chart box ===== */
 .chart-box {
   min-height: 300px;
   position: relative;
   z-index: 1;
 }
 
-/* Card */
+/* ===== Card ===== */
 .card-container {
-  background: #1e1e1e;
-  padding: 2.5rem 3rem;
-  border-radius: 14px;
-  max-width: 800px;
-  width: 100%;
-  margin: 3rem auto;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+  background: var(--surface);
+  padding: 2.25rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  box-sizing: border-box;
+  gap: 1.25rem;
 }
 
-/* Tablas */
 .card-container table {
   width: 100%;
-  table-layout: fixed;
   border-collapse: collapse;
 }
+
 .card-container th,
 .card-container td {
   word-wrap: break-word;
@@ -138,7 +284,7 @@ h1 {
   padding: 0.5rem;
 }
 
-/* Sección de archivo */
+/* ===== Tablas ===== */
 .file-section {
   display: flex;
   flex-direction: column;
@@ -146,23 +292,10 @@ h1 {
   gap: 0.4rem;
 }
 
-.btn-secondary {
-  background: #2a2a2a;
-  color: #fff;
-  border: none;
-  padding: 0.9rem 1.6rem;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: background 0.3s;
-}
-.btn-secondary:hover {
-  background: #3a3a3a;
-}
-
-.file-info {
-  font-size: 0.9rem;
-  color: #bbb;
-  font-style: italic;
-  margin: 0;
+/* ===== Export bar ===== */
+.export-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
 }

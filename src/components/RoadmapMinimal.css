@@ -1,15 +1,19 @@
 .roadmap-minimal {
   margin-top: 2rem;
-  padding: 1rem;
-  background: #111;
-  border-radius: 8px;
-  color: #eee;
+  padding: 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
 }
 
 .legend {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   margin-bottom: 1rem;
+  font-size: 0.85rem;
+  color: var(--text-soft);
 }
 
 .legend-box {
@@ -18,33 +22,43 @@
   height: 14px;
   margin-right: 5px;
   border-radius: 3px;
+  vertical-align: middle;
 }
 
-.legend-box.done { background: #2ecc71; }
-.legend-box.active { background: #3498db; }
-.legend-box.planned { background: #e67e22; }
+.legend-box.done { background: var(--done); }
+.legend-box.active { background: var(--active); }
+.legend-box.planned { background: var(--planned); }
 
 .task-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 14px;
+  font-size: 0.9rem;
 }
 
 .task-table th, .task-table td {
-  padding: 8px;
-  border-bottom: 1px solid #333;
+  padding: 0.6rem 0.5rem;
+  border-bottom: 1px solid var(--border);
   text-align: left;
 }
 
-.status.done { color: #2ecc71; font-weight: bold; }
-.status.active { color: #3498db; font-weight: bold; }
-.status.planned { color: #e67e22; font-weight: bold; }
+.task-table th {
+  color: var(--text-soft);
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.status.done { color: var(--done); font-weight: 600; }
+.status.active { color: var(--active); font-weight: 600; }
+.status.planned { color: var(--planned); font-weight: 600; }
 
 .bar-container {
   position: relative;
   height: 20px;
-  background: #222;
-  border-radius: 4px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
   overflow: hidden;
 }
 
@@ -52,5 +66,5 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  border-radius: 4px;
+  border-radius: 6px;
 }

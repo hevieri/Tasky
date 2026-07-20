@@ -1,29 +1,56 @@
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+  line-height: 1.6;
   font-weight: 400;
 
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: #e7e9ee;
+  background-color: #0c0e14;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Design tokens */
+  --bg: #0c0e14;
+  --surface: #161a23;
+  --surface-2: #1d2230;
+  --border: #2a3142;
+  --text: #e7e9ee;
+  --text-soft: #9aa3b2;
+  --accent: #6366f1;
+  --accent-2: #22d3ee;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.35);
+  --radius: 14px;
+  --radius-sm: 10px;
+
+  /* Estados */
+  --done: #34d399;
+  --active: #60a5fa;
+  --planned: #fbbf24;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #121212; /* consistente con app-container */
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(1200px 600px at 80% -10%, rgba(99, 102, 241, 0.18), transparent),
+    radial-gradient(900px 500px at -10% 10%, rgba(34, 211, 238, 0.12), transparent);
+  background-attachment: fixed;
 }
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: var(--accent-2);
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  color: var(--accent);
 }

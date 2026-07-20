@@ -1,29 +1,39 @@
 .editable-table {
   margin-top: 2rem;
-  padding: 1rem;
-  background: #111;
-  border-radius: 8px;
-  color: #eee;
+  padding: 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  overflow-x: auto;
 }
 
 .editable-table table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 14px;
+  font-size: 0.9rem;
 }
 
 .editable-table th,
 .editable-table td {
-  padding: 8px;
-  border-bottom: 1px solid #333;
+  padding: 0.6rem 0.5rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
 }
 
 .editable-table input,
 .editable-table select {
   width: 100%;
-  padding: 4px;
-  background: #222;
-  color: #eee;
-  border: 1px solid #444;
-  border-radius: 4px;
+  padding: 0.45rem;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+.editable-table input:focus,
+.editable-table select:focus {
+  outline: none;
+  border-color: var(--accent);
 }
